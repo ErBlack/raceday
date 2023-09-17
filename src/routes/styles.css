@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'nfs';
+    src: url('nfs.woff2') format('woff2'), url('nfs.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --color-text: #222;
+    --color-link: #265bfb;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--color-text);
+    box-shadow: inset 0 0 90vw 0 rgba(0, 0, 0, 0.3);
+    font-family: Helvetica;
+}
+
+a {
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-link);
+}
