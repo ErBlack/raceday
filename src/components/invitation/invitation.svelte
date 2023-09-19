@@ -35,6 +35,7 @@
 
     p {
         margin: 0 auto 2em auto;
+        padding: 0 2em;
         width: 600px;
         max-width: 100vw;
         font-size: 24px;
