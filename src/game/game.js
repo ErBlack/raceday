@@ -1,5 +1,3 @@
-import { Nissan } from './car';
-
 /**
  * @type number
  */
@@ -11,10 +9,15 @@ let lastTime;
 let animationFrame;
 
 /**
+ * @type {{update: (dt: number) => void}[]} object
+ */
+let objects = [];
+
+/**
  * @param {number} dt;
  */
 const tick = dt => {
-    Nissan.update(dt);
+    objects.forEach(object => object.update(dt));
 };
 
 const loop = () => {
@@ -35,8 +38,13 @@ const frame = () => {
     animationFrame = requestAnimationFrame(loop);
 };
 
-export const start = () => {
+/**
+ * @param {{update: (dt: number) => void}[]} gameObjects
+ */
+export const start = gameObjects => {
     lastTime = Date.now();
+
+    objects = gameObjects;
 
     frame();
 };
