@@ -1,33 +1,43 @@
-import { applyBezier } from './applyBezier';
+import { applyBezier } from './apply-bezier';
 import { distance } from './const';
 import { PubSub } from './pubsub';
 
-const drawChart = (dots, chartElement) => {
-    const step = 1;
-    const total = 100;
+// const drawChart = (dots, chartElement) => {
+//     const step = 1;
+//     const total = 100;
 
-    for (let i = 0; i <= total; i += step) {
-        const bi = applyBezier(dots, i / total);
+//     for (let i = 0; i <= total; i += step) {
+//         const bi = applyBezier(dots, i / total);
 
-        const dot = document.createElement('div');
+//         const dot = document.createElement('div');
 
-        dot.style.position = 'absolute';
-        dot.style.width = '2px';
-        dot.style.height = '2px';
-        dot.style.borderRadius = '50%';
-        dot.style.backgroundColor = 'black';
-        dot.style.left = `${i}%`;
-        dot.style.top = `${100 - bi}%`;
+//         dot.style.position = 'absolute';
+//         dot.style.width = '2px';
+//         dot.style.height = '2px';
+//         dot.style.borderRadius = '50%';
+//         dot.style.backgroundColor = 'black';
+//         dot.style.left = `${i}%`;
+//         dot.style.top = `${100 - bi}%`;
 
-        chartElement.appendChild(dot);
-    }
-};
+//         chartElement.appendChild(dot);
+//     }
+// };
+
+// debug() {
+//     this.#gearVelocity.forEach((dots, index) => {
+//         const chartElement = document.getElementById(`gear${index + 1}`);
+
+//         if (!chartElement) return;
+
+//         drawChart(dots, chartElement);
+//     });
+// }
 
 /**
  * @abstract
  */
 export class Car extends PubSub {
-    #engineStarted = false;
+    #racing = false;
     #rpm = 1;
     #gear = 0;
     #startTime = 0;
@@ -49,9 +59,10 @@ export class Car extends PubSub {
      */
     #maxRpm;
     /**
+     * Distance in meters
      * @type {number}
      */
-    #distance = 0;
+    distance = 0;
     /**
      * @type {number}
      */
@@ -69,25 +80,16 @@ export class Car extends PubSub {
         this.#maxRpm = maxRpm;
         this.#power = power;
     }
-    debug() {
-        this.#gearVelocity.forEach((dots, index) => {
-            const chartElement = document.getElementById(`gear${index + 1}`);
-
-            if (!chartElement) return;
-
-            drawChart(dots, chartElement);
-        });
-    }
     start() {
         this.#gear = 0;
-        this.#rpm = 1000;
+        this.#rpm = 3000;
         this.#startTime = Date.now();
-        this.#engineStarted = true;
+        this.#racing = true;
+        this.distance = 0;
         this.emit('start');
     }
     #finish() {
-        this.#engineStarted = false;
-        this.gear = 0;
+        this.#racing = false;
         this.#raceTime = Date.now() - this.#startTime;
         this.#startTime = 0;
 
@@ -101,21 +103,25 @@ export class Car extends PubSub {
      * @param {number} dt;
      */
     update(dt) {
-        if (!this.#engineStarted) return;
         if (this.#gear === 0) return;
 
-        this.#rpm = Math.min(this.#maxRpm, this.#rpm + this.#getRpmIncrement(dt));
-        this.emit('rpmChange', this.#rpm);
+        if (this.#racing) {
+            this.#rpm = Math.min(this.#maxRpm, this.#rpm + this.#getRpmIncrement(dt));
+            this.emit('rpmChange', this.#rpm);
+        }
 
         const speed = this.#getSpeed();
-        this.emit('speedChange', speed);
 
-        const distanceIncrement = (dt / 1000 / 60 / 60) * speed;
+        if (this.#racing) {
+            this.emit('speedChange', speed);
+        }
 
-        this.#distance += distanceIncrement;
-        this.emit('distanceChange', this.#distance);
+        const distanceIncrement = (dt / 60 / 60) * speed * 100;
 
-        if (this.#distance > distance) {
+        this.distance += distanceIncrement;
+        this.emit('distanceChange', this.distance);
+
+        if (this.#racing && this.distance >= distance) {
             this.#finish();
         }
     }

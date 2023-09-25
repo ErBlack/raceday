@@ -1,3 +1,6 @@
+import { clear, gameState, init } from './game-state';
+import { render } from './render';
+
 /**
  * @type number
  */
@@ -9,15 +12,11 @@ let lastTime;
 let animationFrame;
 
 /**
- * @type {{update: (dt: number) => void}[]} object
- */
-let objects = [];
-
-/**
  * @param {number} dt;
  */
 const tick = dt => {
-    objects.forEach(object => object.update(dt));
+    gameState.objects.forEach(object => object.update(dt));
+    render();
 };
 
 const loop = () => {
@@ -38,17 +37,16 @@ const frame = () => {
     animationFrame = requestAnimationFrame(loop);
 };
 
-/**
- * @param {{update: (dt: number) => void}[]} gameObjects
- */
-export const start = gameObjects => {
+export const start = () => {
     lastTime = Date.now();
 
-    objects = gameObjects;
+    init();
 
     frame();
 };
 
 export const stop = () => {
     cancelAnimationFrame(animationFrame);
+
+    clear();
 };
