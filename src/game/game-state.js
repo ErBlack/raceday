@@ -3,6 +3,9 @@ import { Nissan } from './nissan';
 import { BotRpm } from './bot-rpm';
 import { Sign } from './sign';
 import { canvasSize, distance, pxPerSantimeter } from './const';
+import { Mitsubishi } from './mitsubishi';
+import { Toyota } from './toyota';
+import { Mazda } from './mazda';
 
 /**
  * @type {{
@@ -16,9 +19,9 @@ import { canvasSize, distance, pxPerSantimeter } from './const';
 export let gameState;
 
 export const init = () => {
-    const car1 = new Nissan();
-    const car2 = new Nissan();
-    const car3 = new Nissan();
+    const car1 = new Mitsubishi();
+    const car2 = new Toyota();
+    const car3 = new Mazda();
     const car4 = new Nissan();
 
     const bot1 = new BotRpm(car1, 5500);

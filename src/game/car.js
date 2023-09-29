@@ -1,5 +1,5 @@
 import { applyBezier } from './apply-bezier';
-import { distance } from './const';
+import { canvasSize, distance, pxPerSantimeter } from './const';
 import { PubSub } from './pubsub';
 
 // const drawChart = (dots, chartElement) => {
@@ -42,6 +42,17 @@ export class Car extends PubSub {
     #gear = 0;
     #startTime = 0;
     #raceTime = 0;
+    #width = 100;
+    #height = 220;
+    #bottomOffset = 100;
+    /**
+     * @type {HTMLImageElement}
+     */
+    #sprite;
+    /**
+     * @type {number}
+     */
+    #x;
     /**
      * @type {number}
      */
@@ -69,11 +80,13 @@ export class Car extends PubSub {
     #power = 0.01;
 
     /**
-     * @param {{ speedRatio: number, gearRatio: number[], gearVelocity: [number, number, number, number][], maxRpm: number, power: number }} options
+     * @param {{ speedRatio: number, gearRatio: number[], gearVelocity: [number, number, number, number][], maxRpm: number, power: number, x: number, sprite: HTMLImageElement }} options
      */
-    constructor({ speedRatio, gearRatio, gearVelocity, maxRpm, power }) {
+    constructor({ speedRatio, gearRatio, gearVelocity, maxRpm, power, x, sprite }) {
         super();
 
+        this.#sprite = sprite;
+        this.#x = x;
         this.#speedRatio = speedRatio;
         this.#gearRatio = gearRatio;
         this.#gearVelocity = gearVelocity;
@@ -158,5 +171,14 @@ export class Car extends PubSub {
     }
     gearDown() {
         this.#changeGear(this.#gear - 1);
+    }
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {number} worldDistance
+     */
+    render(context, worldDistance) {
+        const y = canvasSize - worldDistance / pxPerSantimeter - this.#height - this.#bottomOffset;
+
+        context.drawImage(this.#sprite, this.#x, y, this.#width, this.#height);
     }
 }
