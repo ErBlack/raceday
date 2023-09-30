@@ -1,5 +1,5 @@
 import { applyBezier } from './apply-bezier';
-import { canvasSize, distance, pxPerSantimeter } from './const';
+import { canvasSize, distance, pxPerCentimeter } from './const';
 import { PubSub } from './pubsub';
 
 // const drawChart = (dots, chartElement) => {
@@ -37,7 +37,7 @@ import { PubSub } from './pubsub';
  * @abstract
  */
 export class Car extends PubSub {
-    #racing = false;
+    #started = false;
     #rpm = 1;
     #gear = 0;
     #startTime = 0;
@@ -68,7 +68,7 @@ export class Car extends PubSub {
     /**
      * @type {number}
      */
-    #maxRpm;
+    maxRpm;
     /**
      * Distance in meters
      * @type {number}
@@ -77,7 +77,7 @@ export class Car extends PubSub {
     /**
      * @type {number}
      */
-    #power = 0.01;
+    #power;
 
     /**
      * @param {{ speedRatio: number, gearRatio: number[], gearVelocity: [number, number, number, number][], maxRpm: number, power: number, x: number, sprite: HTMLImageElement }} options
@@ -90,19 +90,20 @@ export class Car extends PubSub {
         this.#speedRatio = speedRatio;
         this.#gearRatio = gearRatio;
         this.#gearVelocity = gearVelocity;
-        this.#maxRpm = maxRpm;
+        this.maxRpm = maxRpm;
         this.#power = power;
     }
     start() {
         this.#gear = 0;
+        this.emit('gearChange', 0);
         this.#rpm = 3000;
         this.#startTime = Date.now();
-        this.#racing = true;
+        this.#started = true;
         this.distance = 0;
         this.emit('start');
     }
     #finish() {
-        this.#racing = false;
+        this.#started = false;
         this.#raceTime = Date.now() - this.#startTime;
         this.#startTime = 0;
 
@@ -118,14 +119,14 @@ export class Car extends PubSub {
     update(dt) {
         if (this.#gear === 0) return;
 
-        if (this.#racing) {
-            this.#rpm = Math.min(this.#maxRpm, this.#rpm + this.#getRpmIncrement(dt));
+        if (this.#started) {
+            this.#rpm = Math.min(this.maxRpm, this.#rpm + this.#getRpmIncrement(dt));
             this.emit('rpmChange', this.#rpm);
         }
 
         const speed = this.#getSpeed();
 
-        if (this.#racing) {
+        if (this.#started) {
             this.emit('speedChange', speed);
         }
 
@@ -134,7 +135,7 @@ export class Car extends PubSub {
         this.distance += distanceIncrement;
         this.emit('distanceChange', this.distance);
 
-        if (this.#racing && this.distance >= distance) {
+        if (this.#started && this.distance >= distance) {
             this.#finish();
         }
     }
@@ -142,7 +143,7 @@ export class Car extends PubSub {
      * @param {number} dt;
      */
     #getRpmIncrement(dt) {
-        const incrementCoefficient = applyBezier(this.#gearVelocity[this.#gear - 1], this.#rpm / this.#maxRpm);
+        const incrementCoefficient = applyBezier(this.#gearVelocity[this.#gear - 1], this.#rpm / this.maxRpm);
 
         return dt * incrementCoefficient * this.#power * this.#gearRatio[this.#gear - 1];
     }
@@ -153,6 +154,8 @@ export class Car extends PubSub {
      * @param {number} newGear
      */
     #changeGear(newGear) {
+        if (!this.#started) return;
+
         const newGearRatio = this.#gearRatio[newGear - 1];
 
         if (newGearRatio === undefined) return;
@@ -177,7 +180,7 @@ export class Car extends PubSub {
      * @param {number} worldDistance
      */
     render(context, worldDistance) {
-        const y = canvasSize - worldDistance / pxPerSantimeter - this.#height - this.#bottomOffset;
+        const y = canvasSize - worldDistance / pxPerCentimeter - this.#height - this.#bottomOffset;
 
         context.drawImage(this.#sprite, this.#x, y, this.#width, this.#height);
     }

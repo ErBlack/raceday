@@ -1,12 +1,19 @@
 <script>
-    import { onMount } from 'svelte';
-    import { start, stop } from './game';
+    import { onDestroy, onMount } from 'svelte';
+    import { start, stop } from './loop';
     import { initRender } from './render';
     import { preloadAssets } from './assets';
     import { canvasSize } from './const';
+    import Dashboard from './dashboard/dashboard.svelte';
+    import { clear, startRace } from './game';
+    import Timer from './timer/timer.svelte';
 
     let started = true;
     let scale = 1;
+    /**
+     * @type {NodeJS.Timeout}
+     */
+    let raceTimeout;
 
     const updateScale = () => {
         const { innerWidth, innerHeight } = window;
@@ -18,14 +25,22 @@
      * @param {KeyboardEvent} event
      */
     const onKeyUp = event => {
-        if (event.key === 'Escape') start();
-
         started = true;
     };
 
     onMount(() => {
         updateScale();
         preloadAssets();
+        start();
+
+        raceTimeout = setTimeout(() => {
+            startRace();
+        }, 3500);
+    });
+
+    onDestroy(() => {
+        clearTimeout(raceTimeout);
+        clear();
     });
 </script>
 
@@ -33,6 +48,8 @@
 {#if started}
     <div id="game">
         <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});" />
+        <Dashboard />
+        <Timer />
     </div>
 {/if}
 

@@ -33,4 +33,8 @@ export class PubSub {
             this.#events[eventName].forEach(callback => callback(data));
         }
     }
+
+    removeAllListeners() {
+        this.#events = {};
+    }
 }

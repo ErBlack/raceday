@@ -17,7 +17,6 @@ export class BotFuzzyRpm extends Bot {
         this.subscribe('rpmChange', this.#onRpmChange);
 
         this.car.start();
-        this.car.gearUp();
     }
 
     /**

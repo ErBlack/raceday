@@ -1,6 +1,6 @@
 import { CITY } from './assets';
-import { canvasSize, distance, pxPerSantimeter, tilePhysicalSize } from './const';
-import { gameState } from './game-state';
+import { canvasSize, distance, pxPerCentimeter, tilePhysicalSize } from './const';
+import { gameState } from './game';
 
 /**
  * @type {HTMLCanvasElement}
@@ -27,7 +27,7 @@ const renderWorld = offset => {
     const currentTileIndex = Math.floor(offset / tilePhysicalSize) % 4;
     const nextTileIndex = (currentTileIndex + 1) % 4;
 
-    const tileOffset = (offset % tilePhysicalSize) / pxPerSantimeter;
+    const tileOffset = (offset % tilePhysicalSize) / pxPerCentimeter;
 
     const currentTile = CITY[currentTileIndex];
     const nextTile = CITY[nextTileIndex];

@@ -1,5 +1,5 @@
 import { SIGNS } from './assets';
-import { pxPerSantimeter } from './const';
+import { pxPerCentimeter } from './const';
 
 export class Sign {
     width = 638;
@@ -18,6 +18,6 @@ export class Sign {
      * @param {number} worldDistance
      */
     render(context, worldDistance) {
-        context.drawImage(this.image, this.x, worldDistance / pxPerSantimeter + this.y, this.width, this.height);
+        context.drawImage(this.image, this.x, worldDistance / pxPerCentimeter + this.y, this.width, this.height);
     }
 }

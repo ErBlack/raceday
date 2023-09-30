@@ -1,18 +1,15 @@
-export class Bot {
-    /**
-     * @type {import('./car').Car}
-     */
-    car;
+import { Driver } from './driver';
+import { random } from './random';
+
+export class Bot extends Driver {
     /**
      * @type {{ event: string, callback: Function }[]}
      */
     #subscriptions = [];
     /**
-     * @param {import('./car').Car} car
+     * @type {NodeJS.Timeout|undefined}
      */
-    constructor(car) {
-        this.car = car;
-    }
+    #startTimeout;
     /**
      * @param {string} event
      * @param {Function} callback
@@ -21,7 +18,14 @@ export class Bot {
         this.#subscriptions.push({ event, callback });
         this.car.addEventListener(event, callback);
     }
+    start() {
+        this.#startTimeout = setTimeout(() => {
+            this.car.gearUp();
+        }, random(10, 200));
+    }
     kill() {
+        clearTimeout(this.#startTimeout);
+
         this.#subscriptions.forEach(({ event, callback }) => {
             this.car.removeEventListener(event, callback);
         });
