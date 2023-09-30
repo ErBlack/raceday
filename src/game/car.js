@@ -1,5 +1,5 @@
 import { applyBezier } from './apply-bezier';
-import { canvasSize, distance, pxPerCentimeter } from './const';
+import { canvasSize, distance, pxPerCentimeter, visibleTrack } from './const';
 import { PubSub } from './pubsub';
 
 // const drawChart = (dots, chartElement) => {
@@ -80,6 +80,11 @@ export class Car extends PubSub {
     #power;
 
     /**
+     * @type {number}
+     */
+    #offTrackDistance;
+
+    /**
      * @param {{ speedRatio: number, gearRatio: number[], gearVelocity: [number, number, number, number][], maxRpm: number, power: number, x: number, sprite: HTMLImageElement }} options
      */
     constructor({ speedRatio, gearRatio, gearVelocity, maxRpm, power, x, sprite }) {
@@ -92,6 +97,8 @@ export class Car extends PubSub {
         this.#gearVelocity = gearVelocity;
         this.maxRpm = maxRpm;
         this.#power = power;
+
+        this.#offTrackDistance = visibleTrack + this.#height * pxPerCentimeter;
     }
     start() {
         this.#gear = 0;
@@ -106,10 +113,6 @@ export class Car extends PubSub {
         this.#started = false;
         this.#raceTime = Date.now() - this.#startTime;
         this.#startTime = 0;
-
-        console.log({
-            result: this.#raceTime / 1000,
-        });
 
         this.emit('finish', this.#raceTime);
     }
@@ -137,6 +140,10 @@ export class Car extends PubSub {
 
         if (this.#started && this.distance >= distance) {
             this.#finish();
+        }
+
+        if (this.distance >= this.#offTrackDistance) {
+            this.emit('outOfTrack');
         }
     }
     /**

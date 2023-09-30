@@ -1,4 +1,10 @@
-<div />
+<script>
+    import { gameStarted } from '../store';
+</script>
+
+{#if $gameStarted}
+    <div />
+{/if}
 
 <style>
     div {

@@ -20,6 +20,8 @@ export const initRender = node => {
     context = canvas.getContext('2d');
 };
 
+const finishOffset = distance + 1500;
+
 /**
  * @param {number} offset
  */
@@ -39,7 +41,7 @@ const renderWorld = offset => {
 export const render = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    const worldDistance = Math.min(gameState.playerCar.distance, distance);
+    const worldDistance = Math.min(gameState.playerCar.distance, finishOffset);
 
     renderWorld(worldDistance);
 

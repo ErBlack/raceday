@@ -1,4 +1,4 @@
-import { clear, gameState, init } from './game';
+import { gameState } from './game';
 import { render } from './render';
 
 /**
@@ -37,16 +37,12 @@ const frame = () => {
     animationFrame = requestAnimationFrame(loop);
 };
 
-export const start = () => {
+export const startLoop = () => {
     lastTime = Date.now();
-
-    init();
 
     frame();
 };
 
-export const stop = () => {
-    cancelAnimationFrame(animationFrame);
-
-    clear();
+export const stopLoop = () => {
+    typeof cancelAnimationFrame !== 'undefined' && cancelAnimationFrame(animationFrame);
 };

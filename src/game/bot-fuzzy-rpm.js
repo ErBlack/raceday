@@ -15,8 +15,6 @@ export class BotFuzzyRpm extends Bot {
         this.#rpms = new Array(6).fill(0).map(() => random(rpm - fuzzy, rpm + fuzzy));
 
         this.subscribe('rpmChange', this.#onRpmChange);
-
-        this.car.start();
     }
 
     /**

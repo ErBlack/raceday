@@ -1,17 +1,17 @@
 <script>
     import { onDestroy, onMount } from 'svelte';
-    import { start, stop } from './loop';
     import { initRender } from './render';
     import { preloadAssets } from './assets';
     import { canvasSize } from './const';
     import Dashboard from './dashboard/dashboard.svelte';
-    import { clear, startRace } from './game';
+    import { startGame, stopGame } from './game';
     import Timer from './timer/timer.svelte';
+    import Results from './results/results.svelte';
 
     let started = true;
     let scale = 1;
     /**
-     * @type {NodeJS.Timeout}
+     * @type {any}
      */
     let raceTimeout;
 
@@ -31,16 +31,12 @@
     onMount(() => {
         updateScale();
         preloadAssets();
-        start();
-
-        raceTimeout = setTimeout(() => {
-            startRace();
-        }, 3500);
+        startGame();
     });
 
     onDestroy(() => {
         clearTimeout(raceTimeout);
-        clear();
+        stopGame();
     });
 </script>
 
@@ -50,6 +46,7 @@
         <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});" />
         <Dashboard />
         <Timer />
+        <Results />
     </div>
 {/if}
 

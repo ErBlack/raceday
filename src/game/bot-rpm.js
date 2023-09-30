@@ -12,8 +12,6 @@ export class BotRpm extends Bot {
         this.#rpm = rpm;
 
         this.subscribe('rpmChange', this.#onRpmChange);
-
-        this.car.start();
     }
 
     /**
