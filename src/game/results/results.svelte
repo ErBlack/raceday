@@ -1,11 +1,12 @@
 <script>
-    import { startGame } from '../game';
+    import { startGame, stopGame } from '../game';
     import { resultsStore } from '../store';
 
     const players = ['Brian Spilner', 'Caleb Reece', 'Victor Vasquez', 'Player'];
+    const cars = ['Mitsubishi eclipse', 'Toyota Supra', 'Mazda RX-7', 'Nissan Skyline'];
 
     /**
-     * @type {{player: string, time: number}[] | undefined}
+     * @type {{player: string, car: string, time: number}[] | undefined}
      */
     let results;
     let win = false;
@@ -24,6 +25,7 @@
                 .map((time, index) => ({
                     player: players[index],
                     time,
+                    car: cars[index],
                 }))
                 .sort(
                     // @ts-ignore
@@ -49,12 +51,21 @@
     <section class="results">
         <h2>You {win ? 'Win' : 'Lose'}!</h2>
         <div class="table">
-            {#each results as results}<pre>{(results.player + ':').padEnd(20, ' ')}{results.time === undefined
+            {#each results as results}<pre class="time">{(results.player + ':').padEnd(20, ' ')}{results.time ===
+                    undefined
                         ? '--.----'
-                        : (results.time / 1000).toFixed(3)}</pre>{/each}
+                        : (results.time / 1000).toFixed(3)}</pre>
+                <pre class="car">{results.car.padEnd(33, ' ')}</pre>{/each}
         </div>
         <div class="buttonset">
-            <button class="button" autofocus on:click={startGame}>Play Again</button>
+            <button
+                class="button"
+                autofocus
+                on:click={() => {
+                    stopGame();
+                    startGame();
+                }}>Play Again</button
+            >
             <button>Exit</button>
         </div>
     </section>
@@ -114,6 +125,16 @@
         padding: 20px 30px;
         font: inherit;
         cursor: pointer;
+    }
+
+    .time {
+        margin-bottom: 0;
+    }
+
+    .car {
+        margin-top: 0;
+        font-size: 0.8em;
+        margin-left: 0.25em;
     }
 
     @keyframes appear {

@@ -36,10 +36,6 @@ export const startGame = async () => {
     const mazda = new Mazda();
     const nissan = new Nissan();
 
-    nissan.addEventListener('speedChange', speedStore.set);
-    nissan.addEventListener('rpmChange', (/** @type {number} */ value) => rpmStore.set(value / nissan.maxRpm));
-    nissan.addEventListener('gearChange', gearStore.set);
-
     const bot1 = new BotRpm(mitsubishi, 5500);
     const bot2 = new BotFuzzyRpm(toyota, 1000, 6000);
     const bot3 = new BotFuzzyRpm(mazda, 500, 7000);
@@ -54,6 +50,12 @@ export const startGame = async () => {
         signs: [new Sign(canvasSize - 525, 0), new Sign(-distance / pxPerCentimeter, 1)],
         player,
     };
+
+    gameState.playerCar.addEventListener('speedChange', speedStore.set);
+    gameState.playerCar.addEventListener('rpmChange', (/** @type {number} */ value) =>
+        rpmStore.set(value / gameState.playerCar.maxRpm)
+    );
+    gameState.playerCar.addEventListener('gearChange', (/** @type {{gear: number}} */ { gear }) => gearStore.set(gear));
 
     startLoop();
 
@@ -106,4 +108,7 @@ export const stopGame = () => {
     gameState?.bots.forEach(bot => bot.kill());
     stopLoop();
     gameStarted.set(false);
+    gearStore.set(0);
+    rpmStore.set(0);
+    speedStore.set(0);
 };
