@@ -6,9 +6,9 @@
     /**
      * @type {[number, number, number, number]}
      */
-    const columns = [18, 36, 54, 68];
-    const top = 32;
-    const bottom = 52;
+    const columns = [17, 35, 53, 68];
+    const top = 33;
+    const bottom = 53;
 
     /**
      * @type {{gearbox: DOMRect, top: number, bottom: number, columns: [number, number, number, number], row: number, xOffset: number, yOffset: number, target: HTMLElement} | undefined}
@@ -38,7 +38,7 @@
             case 2:
                 return isTop ? 5 : 6;
             case 3:
-                return 'r';
+                return 'R';
         }
     };
 
@@ -139,12 +139,19 @@
     /**
      * @param {TouchEvent} event
      */
-    // @ts-ignore
-    const onTouchStart = ({ target, touches: [{ clientX, clientY }] }) => initGearSwitch(target, clientX, clientY);
+
+    const onTouchStart = ({ target, touches: [{ clientX, clientY }], preventDefault }) => {
+        preventDefault();
+        // @ts-ignore
+        initGearSwitch(target, clientX, clientY);
+    };
     /**
      * @param {TouchEvent} event
      */
-    const onTouchMove = ({ touches: [{ clientX, clientY }] }) => handleGearSwitch(clientX, clientY);
+    const onTouchMove = ({ touches: [{ clientX, clientY }], preventDefault }) => {
+        preventDefault();
+        handleGearSwitch(clientX, clientY);
+    };
 </script>
 
 <div
@@ -153,13 +160,10 @@
     tabindex="0"
     on:mousemove={onMouseMove}
     on:mouseup={finishGearSwitch}
-    on:mouseout={finishGearSwitch}
-    on:blur={finishGearSwitch}
     on:touchmove={onTouchMove}
     on:touchend={finishGearSwitch}
-    on:touchcancel={finishGearSwitch}
 >
-    <button id="knob" on:mousedown={onMouseDown} on:touchstart={onTouchStart} />
+    <button id="knob" on:mousedown={onMouseDown} on:touchstart={onTouchStart}>{prevGear || ''}</button>
 </div>
 
 <style>
@@ -176,12 +180,18 @@
         --knob-size: 18%;
         width: var(--knob-size);
         height: var(--knob-size);
-        background: no-repeat center/100% url('/raceday/assets/knob.png');
+        background-color: #5a5a5a;
+        border-radius: 100%;
         position: absolute;
-        border: none;
+        border: solid 2px white;
         top: 41.5%;
         left: 18%;
         cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        display: flex;
+        font-size: 8px;
     }
 
     @media (max-width: 640px) {
