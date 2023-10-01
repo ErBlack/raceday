@@ -21,6 +21,13 @@
     };
 
     onMount(() => {
+        const meta = document.head.querySelector('[name="viewport"]');
+
+        if (meta) {
+            // @ts-ignore
+            meta.content = 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no';
+        }
+
         updateScale();
         preloadAssets();
         startGame();
@@ -29,10 +36,17 @@
     onDestroy(() => {
         clearTimeout(raceTimeout);
         stopGame();
+
+        const meta = document.head.querySelector('[name="viewport"]');
+
+        if (meta) {
+            // @ts-ignore
+            meta.content = 'width=device-width,initial-scale=1';
+        }
     });
 </script>
 
-<svelte:window on:resize={updateScale} />
+<svelte:window on:resize={updateScale} on:scroll={updateScale} />
 <div id="game">
     <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});" />
     <Dashboard />

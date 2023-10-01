@@ -140,16 +140,18 @@
      * @param {TouchEvent} event
      */
 
-    const onTouchStart = ({ target, touches: [{ clientX, clientY }], preventDefault }) => {
-        preventDefault();
+    const onTouchStart = ({ target, touches: [{ clientX, clientY }] }) => {
         // @ts-ignore
         initGearSwitch(target, clientX, clientY);
     };
     /**
      * @param {TouchEvent} event
      */
-    const onTouchMove = ({ touches: [{ clientX, clientY }], preventDefault }) => {
-        preventDefault();
+    const onTouchMove = event => {
+        const [{ clientX, clientY }] = event.touches;
+
+        event.preventDefault();
+
         handleGearSwitch(clientX, clientY);
     };
 </script>
@@ -180,6 +182,9 @@
         --knob-size: 18%;
         width: var(--knob-size);
         height: var(--knob-size);
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
         background-color: #5a5a5a;
         border-radius: 100%;
         position: absolute;
