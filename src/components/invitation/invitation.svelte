@@ -10,14 +10,13 @@
 
 <section class="content">
     <h1>Race Day</h1>
+
+    <p class="text">I invite you to my birthday!</p>
     <p class="text">
-        I invite you to my birthday!
-        <br /><br />
         Come on october {start.getDate()} at {start.getHours()}:{String(start.getMinutes()).padStart(2, '0')} in Belgrade
         at <a class="pin" href="https://yandex.ru/maps/-/CCUZIMBlkA"> Rajićeva 3 apt 2a</a>
-        <br /><br />
-        <Timer {start} />
     </p>
+    <p class="text"><Timer {start} /></p>
     <Links />
 </section>
 
@@ -36,14 +35,19 @@
     p {
         margin: 0 auto 2em auto;
         padding: 0 2em;
-        width: 600px;
+        width: 650px;
         max-width: 100vw;
         font-size: 24px;
+        box-sizing: border-box;
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 580px) {
         h1 {
-            font-size: 32px;
+            font-size: 60px;
+        }
+
+        p {
+            font-size: 22px;
         }
     }
 
