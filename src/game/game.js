@@ -48,7 +48,7 @@ export const startGame = async () => {
         cars: [mitsubishi, toyota, mazda, nissan],
         bots: [bot1, bot2, bot3],
         playerCar: nissan,
-        signs: [new Sign(canvasSize - 525, 0), new Sign(-distance / pxPerCentimeter, 1)],
+        signs: [new Sign(canvasSize - 525, 0), new Sign(canvasSize - distance / pxPerCentimeter - 320, 1)],
         player,
     };
 

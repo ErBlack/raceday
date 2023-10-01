@@ -20,7 +20,7 @@ export const initRender = node => {
     context = canvas.getContext('2d');
 };
 
-const finishOffset = distance + 1500;
+const finishOffset = distance;
 
 /**
  * @param {number} offset
