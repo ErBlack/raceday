@@ -7,17 +7,25 @@
      * @type Date
      */
     export let start;
+    /**
+     * @type Date
+     */
+    export let easer;
 </script>
 
 <section class="content">
-    <h1>Race Day <Gearbox /></h1>
+    <h1>Race Day <Gearbox start={easer} /></h1>
 
     <p class="text">I invite you to my birthday!</p>
     <p class="text">
         Come on october {start.getDate()} at {start.getHours()}:{String(start.getMinutes()).padStart(2, '0')} in Belgrade
         at <a class="pin" href="https://yandex.ru/maps/-/CCUZIMBlkA"> Rajićeva 3 apt 2a</a>
     </p>
-    <p class="text"><Timer {start} /></p>
+    <p class="text">Celebration <Timer {start} waitIcon="🏁" finishedIcon="🤘" /></p>
+
+    <p class="text">
+        Easter egg <Timer start={easer} waitIcon="🥚 after" finishedIcon="ready 🐣" />
+    </p>
     <Links />
 </section>
 

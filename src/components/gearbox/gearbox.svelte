@@ -1,6 +1,24 @@
 <script>
     import { gameOpen } from '../../game/store';
 
+    /**
+     * @type Date
+     */
+    export let start;
+
+    // @ts-ignore
+    let available = start < Date.now() || (typeof window !== 'undefined' && location.search === '?sudo');
+
+    if (!available) {
+        setTimeout(
+            () => {
+                available = true;
+            },
+            // @ts-ignore
+            start - Date.now()
+        );
+    }
+
     const offset = 3;
     const row = 41.5;
     /**
@@ -160,12 +178,14 @@
     id="gearbox"
     role="button"
     tabindex="0"
-    on:mousemove={onMouseMove}
-    on:mouseup={finishGearSwitch}
-    on:touchmove={onTouchMove}
-    on:touchend={finishGearSwitch}
+    on:mousemove={available ? onMouseMove : null}
+    on:mouseup={available ? finishGearSwitch : null}
+    on:touchmove={available ? onTouchMove : null}
+    on:touchend={available ? finishGearSwitch : null}
 >
-    <button id="knob" on:mousedown={onMouseDown} on:touchstart={onTouchStart}>{prevGear || ''}</button>
+    <button id="knob" on:mousedown={available ? onMouseDown : null} on:touchstart={available ? onTouchStart : null}
+        >{prevGear || ''}</button
+    >
 </div>
 
 <style>

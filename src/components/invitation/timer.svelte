@@ -3,6 +3,15 @@
      * @type Date
      */
     export let start;
+    /**
+     * @type string
+     */
+    export let waitIcon;
+    /**
+     * @type string
+     */
+    export let finishedIcon;
+
     const INTERVALS = [1000, 60, 60, 24, 7];
 
     /**
@@ -80,13 +89,11 @@
                 result.push(minutes + ' ' + plural(minutes, ['minute', 'minutes', 'minutes']));
             }
 
-            if (hours || minutes || seconds) {
-                result.push(seconds + ' ' + plural(seconds, ['second', 'seconds', 'seconds']));
-            }
+            result.push(seconds + ' ' + plural(seconds, ['second', 'seconds', 'seconds']));
 
-            return `🏁 ${result.join(' ')}`;
+            return `${waitIcon} ${result.join(' ')}`;
         } else {
-            return '🚀';
+            return finishedIcon;
         }
     }
 </script>
