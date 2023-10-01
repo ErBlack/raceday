@@ -39,8 +39,6 @@ const renderWorld = offset => {
 };
 
 export const render = () => {
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
     const worldDistance = Math.min(gameState.playerCar.distance, finishOffset);
 
     renderWorld(worldDistance);

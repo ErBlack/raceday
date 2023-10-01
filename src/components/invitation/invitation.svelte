@@ -1,6 +1,7 @@
 <script>
     import Timer from './timer.svelte';
     import Links from './links.svelte';
+    import Gearbox from '../gearbox/gearbox.svelte';
 
     /**
      * @type Date
@@ -9,7 +10,7 @@
 </script>
 
 <section class="content">
-    <h1>Race Day</h1>
+    <h1>Race Day <Gearbox /></h1>
 
     <p class="text">I invite you to my birthday!</p>
     <p class="text">
@@ -22,7 +23,6 @@
 
 <style>
     h1 {
-        text-align: center;
         font-size: 100px;
         margin: 0 0 25px 0;
         font-family: nfs;
@@ -30,6 +30,12 @@
         font-weight: normal;
         background-color: #5a5a5a;
         color: #fff;
+        position: relative;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        grid-template-columns: max-content max-content;
+        gap: 0.5em;
     }
 
     p {

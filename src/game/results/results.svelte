@@ -1,6 +1,6 @@
 <script>
     import { startGame, stopGame } from '../game';
-    import { resultsStore } from '../store';
+    import { gameOpen, resultsStore } from '../store';
 
     const players = ['Brian Spilner', 'Caleb Reece', 'Victor Vasquez', 'Player'];
     const cars = ['Mitsubishi eclipse', 'Toyota Supra', 'Mazda RX-7', 'Nissan Skyline'];
@@ -66,7 +66,12 @@
                     startGame();
                 }}>Play Again</button
             >
-            <button>Exit</button>
+            <button
+                on:click={() => {
+                    stopGame();
+                    gameOpen.set(false);
+                }}>Exit</button
+            >
         </div>
     </section>
 {/if}
