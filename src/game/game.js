@@ -6,7 +6,7 @@ import { canvasSize, distance, pxPerCentimeter } from './const';
 import { Mitsubishi } from './objects/mitsubishi';
 import { Toyota } from './objects/toyota';
 import { Mazda } from './objects/mazda';
-import { countdown, gameStarted, gearStore, resultsStore, rpmStore, speedStore } from './store';
+import { countdown, dashboard, gameStarted, gearStore, resultsStore, rpmStore, speedStore } from './store';
 import { Player } from './drivers/player';
 import { startLoop, stopLoop } from './loop';
 import { wait } from '../lib/wait';
@@ -67,6 +67,7 @@ export const startGame = async () => {
     countdown.set(2);
     await wait(1000);
     countdown.set(1);
+    dashboard.set(true);
     await wait(1000);
     countdown.set('Go');
     gameState?.cars.forEach(car => car.start());
@@ -95,6 +96,7 @@ export const startGame = async () => {
 
                 if (playerFinished || index === 3) {
                     playerFinished = true;
+                    dashboard.set(false);
                 }
 
                 if (playerFinished) {
@@ -118,4 +120,5 @@ export const stopGame = () => {
     gearStore.set(0);
     rpmStore.set(0);
     speedStore.set(0);
+    dashboard.set(undefined);
 };

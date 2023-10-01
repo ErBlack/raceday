@@ -1,6 +1,8 @@
 <script>
+    import { encrypt } from '../../lib/crypt';
+
     import { startGame, stopGame } from '../game';
-    import { gameOpen, resultsStore } from '../store';
+    import { gameOpen, resultsStore, winner } from '../store';
 
     const players = ['Brian Spilner', 'Caleb Reece', 'Victor Vasquez', 'Player'];
     const cars = ['Mitsubishi eclipse', 'Toyota Supra', 'Mazda RX-7', 'Nissan Skyline'];
@@ -43,6 +45,12 @@
                 );
 
             win = results[0].player === 'Player';
+
+            winner.update(value => {
+                const code = value || encrypt(String(Date.now()).slice(0, -1));
+
+                return code;
+            });
         }
     );
 </script>

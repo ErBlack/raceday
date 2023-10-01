@@ -47,7 +47,7 @@
         box-sizing: border-box;
     }
 
-    @media (max-width: 580px) {
+    @media (max-width: 640px) {
         h1 {
             font-size: 48px;
             line-height: 90px;

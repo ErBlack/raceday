@@ -1,10 +1,17 @@
 <script>
+    import { dashboard } from '../store';
     import Gear from './gear.svelte';
     import Speedometer from './speedometer.svelte';
     import Tachometer from './tachometer.svelte';
 </script>
 
-<section>
+<section
+    class={$dashboard === undefined ? '' : $dashboard ? 'visible' : 'hidden'}
+    on:animationend={() => {
+        console.log('ani');
+        dashboard.update(value => value || undefined);
+    }}
+>
     <Speedometer />
     <Tachometer />
     <Gear />
@@ -21,8 +28,18 @@
         border-radius: 10px;
         background-color: white;
         transform: translate(10%, -110%);
-        animation: appear 0.5s ease-in-out 3s forwards;
         pointer-events: none;
+        z-index: 2;
+    }
+
+    .visible {
+        animation: appear 0.5s ease-in-out;
+        animation-fill-mode: forwards;
+    }
+
+    .hidden {
+        animation: hide 0.5s ease-in-out;
+        animation-fill-mode: forwards;
     }
 
     @media (max-width: 640px) {
@@ -46,6 +63,16 @@
 
         to {
             transform: translate(0);
+        }
+    }
+
+    @keyframes hide {
+        from {
+            transform: translate(0);
+        }
+
+        to {
+            transform: translate(10%, -110%);
         }
     }
 </style>

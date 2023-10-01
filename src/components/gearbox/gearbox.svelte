@@ -184,7 +184,7 @@
         cursor: pointer;
     }
 
-    @media (max-width: 580px) {
+    @media (max-width: 640px) {
         #gearbox {
             --gearbox-size: 80px;
         }
