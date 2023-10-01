@@ -34,7 +34,7 @@
             border-bottom-right-radius: 0;
             border-top: none;
             border-right: none;
-            width: 100vw;
+            width: calc(100vw - 10px);
             height: calc(100vw / 3);
         }
     }

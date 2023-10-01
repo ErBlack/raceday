@@ -95,7 +95,7 @@
         animation: appear 0.5s ease-in-out 0.2s forwards;
         opacity: 0;
         transform: scale(2);
-        max-width: 100vw;
+        max-width: calc(100vw - 20px);
     }
 
     h2 {
