@@ -8,7 +8,6 @@
     import Countdown from './countdown/countdown.svelte';
     import Results from './results/results.svelte';
 
-    let started = true;
     let scale = 1;
     /**
      * @type {any}
@@ -19,13 +18,6 @@
         const { innerWidth, innerHeight } = window;
 
         scale = Math.max(innerWidth, innerHeight) / canvasSize;
-    };
-
-    /**
-     * @param {KeyboardEvent} event
-     */
-    const onKeyUp = event => {
-        started = true;
     };
 
     onMount(() => {
@@ -40,15 +32,13 @@
     });
 </script>
 
-<svelte:window on:keyup={onKeyUp} on:resize={updateScale} />
-{#if started}
-    <div id="game">
-        <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});" />
-        <Dashboard />
-        <Countdown />
-        <Results />
-    </div>
-{/if}
+<svelte:window on:resize={updateScale} />
+<div id="game">
+    <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});" />
+    <Dashboard />
+    <Countdown />
+    <Results />
+</div>
 
 <style>
     #game {
