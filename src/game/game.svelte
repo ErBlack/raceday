@@ -5,7 +5,7 @@
     import { canvasSize } from './const';
     import Dashboard from './dashboard/dashboard.svelte';
     import { startGame, stopGame } from './game';
-    import Timer from './timer/timer.svelte';
+    import Countdown from './countdown/countdown.svelte';
     import Results from './results/results.svelte';
 
     let started = true;
@@ -45,7 +45,7 @@
     <div id="game">
         <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});" />
         <Dashboard />
-        <Timer />
+        <Countdown />
         <Results />
     </div>
 {/if}

@@ -22,6 +22,7 @@
         background-color: white;
         transform: translate(10%, -110%);
         animation: appear 0.5s ease-in-out 3s forwards;
+        pointer-events: none;
     }
 
     @media (max-width: 640px) {

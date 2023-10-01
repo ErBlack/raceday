@@ -6,9 +6,10 @@ import { canvasSize, distance, pxPerCentimeter } from './const';
 import { Mitsubishi } from './mitsubishi';
 import { Toyota } from './toyota';
 import { Mazda } from './mazda';
-import { gameStarted, gearStore, resultsStore, rpmStore, speedStore } from './store';
+import { countdown, gameStarted, gearStore, resultsStore, rpmStore, speedStore } from './store';
 import { Player } from './player';
 import { startLoop, stopLoop } from './loop';
+import { wait } from './wait';
 
 /**
  * @type {{
@@ -59,13 +60,19 @@ export const startGame = async () => {
 
     startLoop();
 
-    await new Promise(resolve => {
-        raceTimeout = setTimeout(() => {
-            gameState?.cars.forEach(car => car.start());
-            gameState?.bots.forEach(bot => bot.start());
-            resolve(undefined);
-        }, 3490);
-    });
+    await wait(500);
+
+    countdown.set(3);
+    await wait(1000);
+    countdown.set(2);
+    await wait(1000);
+    countdown.set(1);
+    await wait(1000);
+    countdown.set('Go');
+    gameState?.cars.forEach(car => car.start());
+    gameState?.bots.forEach(bot => bot.start());
+    await wait(1000);
+    countdown.set(undefined);
 
     let playerFinished = false;
 

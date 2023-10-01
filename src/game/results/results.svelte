@@ -95,6 +95,7 @@
         animation: appear 0.5s ease-in-out 0.2s forwards;
         opacity: 0;
         transform: scale(2);
+        max-width: 100vw;
     }
 
     h2 {
@@ -146,6 +147,20 @@
         to {
             transform: scale(1);
             opacity: 1;
+        }
+    }
+
+    @media (max-width: 640px) {
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translate(0, -100%);
+            }
+
+            to {
+                transform: translate(0);
+                opacity: 1;
+            }
         }
     }
 </style>

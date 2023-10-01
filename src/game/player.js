@@ -9,6 +9,8 @@ export class Player extends Driver {
         super(car);
 
         document.addEventListener('keydown', this.#onKeyDown);
+        document.addEventListener('touchstart', this.#onTouchStart);
+        document.addEventListener('touchend', this.#onTouchEnd);
 
         /**
          * @type {{[key: number]: number}}
@@ -43,6 +45,8 @@ export class Player extends Driver {
      */
     #onFinish = time => {
         document.removeEventListener('keydown', this.#onKeyDown);
+        document.removeEventListener('touchstart', this.#onTouchStart);
+        document.removeEventListener('touchend', this.#onTouchEnd);
 
         const raceStats = {
             ...this.gearSwitchMap,
@@ -70,5 +74,27 @@ export class Player extends Driver {
                 this.car.gearDown();
                 break;
         }
+    };
+
+    /**
+     * @param {TouchEvent} event
+     */
+    #onTouchStart = event => {
+        this.touchStartY = event.touches[0].clientY;
+    };
+
+    /**
+     * @param {TouchEvent} event
+     */
+    #onTouchEnd = event => {
+        if (this.touchStartY === undefined) return;
+
+        if (this.touchStartY > event.changedTouches[0].clientY) {
+            this.car.gearUp();
+        } else {
+            this.car.gearDown();
+        }
+
+        this.touchStartY = undefined;
     };
 }

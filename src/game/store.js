@@ -9,6 +9,8 @@ export const gearStore = writable(0);
 
 export const resultsStore = writable();
 
+export const countdown = writable();
+
 export const stats = persisted('stats', {
     time: Infinity,
 });
