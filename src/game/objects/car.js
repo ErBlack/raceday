@@ -1,7 +1,7 @@
-import { applyBezier } from './apply-bezier';
-import { canvasSize, distance, pxPerCentimeter, visibleTrack } from './const';
-import { PubSub } from './pubsub';
-import { random } from './random';
+import { applyBezier } from '../../lib/apply-bezier';
+import { canvasSize, distance, pxPerCentimeter, visibleTrack } from '../const';
+import { PubSub } from '../../lib/pubsub';
+import { random } from '../../lib/random';
 
 // const drawChart = (dots, chartElement) => {
 //     const step = 1;

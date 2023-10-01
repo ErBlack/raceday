@@ -1,11 +1,11 @@
 import { Bot } from './bot';
-import { random } from './random';
+import { random } from '../../lib/random';
 
 export class BotFuzzyRpm extends Bot {
     #rpms;
 
     /**
-     * @param {import('./car').Car} car
+     * @param {import('../objects/car').Car} car
      * @param {number} fuzzy
      * @param {number} rpm
      */

@@ -1,4 +1,4 @@
-import { CARS } from './assets';
+import { CARS } from '../assets';
 import { Car } from './car';
 
 export class Mazda extends Car {

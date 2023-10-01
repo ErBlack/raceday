@@ -1,7 +1,7 @@
-import { CARS } from './assets';
+import { CARS } from '../assets';
 import { Car } from './car';
 
-export class Toyota extends Car {
+export class Nissan extends Car {
     constructor() {
         super({
             speedRatio: 26.6,
@@ -16,8 +16,8 @@ export class Toyota extends Car {
             ],
             maxRpm: 8000,
             power: 0.0045,
-            x: 878,
-            sprite: CARS[1],
+            x: 1125,
+            sprite: CARS[3],
         });
     }
 }

@@ -1,23 +1,23 @@
-import { BotFuzzyRpm } from './bot-fuzzy-rpm';
-import { Nissan } from './nissan';
-import { BotRpm } from './bot-rpm';
-import { Sign } from './sign';
+import { BotFuzzyRpm } from './drivers/bot-fuzzy-rpm';
+import { Nissan } from './objects/nissan';
+import { BotRpm } from './drivers/bot-rpm';
+import { Sign } from './objects/sign';
 import { canvasSize, distance, pxPerCentimeter } from './const';
-import { Mitsubishi } from './mitsubishi';
-import { Toyota } from './toyota';
-import { Mazda } from './mazda';
+import { Mitsubishi } from './objects/mitsubishi';
+import { Toyota } from './objects/toyota';
+import { Mazda } from './objects/mazda';
 import { countdown, gameStarted, gearStore, resultsStore, rpmStore, speedStore } from './store';
-import { Player } from './player';
+import { Player } from './drivers/player';
 import { startLoop, stopLoop } from './loop';
-import { wait } from './wait';
+import { wait } from '../lib/wait';
 
 /**
  * @type {{
  *    objects: {update: (dt: number) => void}[]
- *    bots: import('./bot').Bot[]
- *    cars: import('./car').Car[]
- *    playerCar: import('./car').Car
- *    signs: import('./sign').Sign[]
+ *    bots: import('./drivers/bot').Bot[]
+ *    cars: import('./objects/car').Car[]
+ *    playerCar: import('./objects/car').Car
+ *    signs: import('./objects/sign').Sign[]
  *    player: Player,
  * }}
  */

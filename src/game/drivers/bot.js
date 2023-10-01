@@ -1,5 +1,5 @@
 import { Driver } from './driver';
-import { random } from './random';
+import { random } from '../../lib/random';
 
 export class Bot extends Driver {
     /**

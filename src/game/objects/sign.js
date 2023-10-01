@@ -1,5 +1,5 @@
-import { SIGNS } from './assets';
-import { pxPerCentimeter } from './const';
+import { SIGNS } from '../assets';
+import { pxPerCentimeter } from '../const';
 
 export class Sign {
     width = 638;

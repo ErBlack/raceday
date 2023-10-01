@@ -1,5 +1,5 @@
 import { Bot } from './bot';
-import { stats } from './store';
+import { stats } from '../store';
 
 export class BotClone extends Bot {
     /**
@@ -7,7 +7,7 @@ export class BotClone extends Bot {
      */
     #startTimeout;
     /**
-     * @param {import('./car').Car} car
+     * @param {import('../objects/car').Car} car
      */
     constructor(car) {
         super(car);

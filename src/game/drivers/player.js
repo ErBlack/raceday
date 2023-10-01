@@ -1,9 +1,9 @@
 import { Driver } from './driver';
-import { stats } from './store';
+import { stats } from '../store';
 
 export class Player extends Driver {
     /**
-     * @param {import('./car').Car} car
+     * @param {import('../objects/car').Car} car
      */
     constructor(car) {
         super(car);

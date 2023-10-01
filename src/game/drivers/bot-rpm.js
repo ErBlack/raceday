@@ -3,7 +3,7 @@ import { Bot } from './bot';
 export class BotRpm extends Bot {
     #rpm;
     /**
-     * @param {import('./car').Car} car
+     * @param {import('../objects/car').Car} car
      * @param {number} rpm
      */
     constructor(car, rpm) {

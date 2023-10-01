@@ -1,4 +1,4 @@
-import { preloadImage } from './preload-image';
+import { preloadImage } from '../lib/preload-image';
 
 /**
  * @type {HTMLImageElement[]}

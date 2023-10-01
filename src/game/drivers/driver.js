@@ -1,10 +1,10 @@
 export class Driver {
     /**
-     * @type {import('./car').Car}
+     * @type {import('../objects/car').Car}
      */
     car;
     /**
-     * @param {import('./car').Car} car
+     * @param {import('../objects/car').Car} car
      */
     constructor(car) {
         this.car = car;
