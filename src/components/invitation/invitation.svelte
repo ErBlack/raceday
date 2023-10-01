@@ -49,7 +49,8 @@
 
     @media (max-width: 580px) {
         h1 {
-            font-size: 60px;
+            font-size: 48px;
+            line-height: 90px;
         }
 
         p {

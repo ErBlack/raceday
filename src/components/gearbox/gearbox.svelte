@@ -1,18 +1,34 @@
 <script>
-    // @ts-nocheck
     import { gameOpen } from '../../game/store';
 
     const offset = 3;
     const row = 41.5;
+    /**
+     * @type {[number, number, number, number]}
+     */
     const columns = [18, 36, 54, 68];
     const top = 32;
     const bottom = 52;
 
+    /**
+     * @type {{gearbox: DOMRect, top: number, bottom: number, columns: [number, number, number, number], row: number, xOffset: number, yOffset: number, target: HTMLElement} | undefined}
+     */
     let dimensions;
+    /**
+     * @type {string | number | undefined}
+     */
     let prevGear;
 
+    /**
+     * @param {number} a
+     * @param {number} b
+     */
     const inRange = (a, b) => a >= b - offset && a <= b + offset;
 
+    /**
+     * @param {boolean} isTop
+     * @param {number} columnIndex
+     */
     const getGear = (isTop, columnIndex) => {
         switch (columnIndex) {
             case 0:
@@ -26,8 +42,16 @@
         }
     };
 
-    const onMouseDown = ({ target, x, y }) => {
-        const parent = target.parentElement;
+    /**
+     * @param {HTMLElement | null} target
+     * @param {number} x
+     * @param {number} y
+     */
+    const initGearSwitch = (target, x, y) => {
+        const parent = target?.parentElement;
+
+        if (!target || !parent) return;
+
         const gearbox = parent.getBoundingClientRect();
 
         const knob = target.getBoundingClientRect();
@@ -36,6 +60,7 @@
             gearbox,
             top: gearbox.y + (gearbox.height * top) / 100,
             bottom: gearbox.y + (gearbox.height * bottom) / 100,
+            // @ts-ignore
             columns: columns.map(column => gearbox.x + (gearbox.width * column) / 100),
             row: gearbox.y + (gearbox.height * row) / 100,
             xOffset: x - knob.x,
@@ -44,7 +69,11 @@
         };
     };
 
-    const onMouseMove = ({ x, y }) => {
+    /**
+     * @param {number} x
+     * @param {number} y
+     */
+    const handleGearSwitch = (x, y) => {
         if (!dimensions) return;
 
         const { target } = dimensions;
@@ -53,8 +82,8 @@
         const knobY = y - dimensions.yOffset;
 
         const inRegular =
-            (knobX <= dimensions.columns[0] + offset) |
-            inRange(knobX, dimensions.columns[1]) |
+            knobX <= dimensions.columns[0] + offset ||
+            inRange(knobX, dimensions.columns[1]) ||
             inRange(knobX, dimensions.columns[2]);
         const inLast = knobX >= dimensions.columns[3] - offset;
 
@@ -69,7 +98,9 @@
         target.style.left = `${resultX - dimensions.gearbox.x}px`;
     };
 
-    const onMouseUp = () => {
+    const finishGearSwitch = () => {
+        if (!dimensions) return;
+
         const { target } = dimensions;
 
         const topP = (parseInt(target.style.top.slice(0, -2)) / dimensions.gearbox.height) * 100;
@@ -94,10 +125,41 @@
 
         prevGear = gear;
     };
+
+    /**
+     * @param {MouseEvent} event
+     */
+    // @ts-ignore
+    const onMouseDown = ({ target, x, y }) => initGearSwitch(target, x, y);
+    /**
+     * @param {MouseEvent} event
+     */
+    const onMouseMove = ({ x, y }) => handleGearSwitch(x, y);
+
+    /**
+     * @param {TouchEvent} event
+     */
+    // @ts-ignore
+    const onTouchStart = ({ target, touches: [{ clientX, clientY }] }) => initGearSwitch(target, clientX, clientY);
+    /**
+     * @param {TouchEvent} event
+     */
+    const onTouchMove = ({ touches: [{ clientX, clientY }] }) => handleGearSwitch(clientX, clientY);
 </script>
 
-<div id="gearbox" role="button" tabindex="0" on:mousemove={onMouseMove} on:mouseup={onMouseUp}>
-    <button id="knob" on:mousedown={onMouseDown} />
+<div
+    id="gearbox"
+    role="button"
+    tabindex="0"
+    on:mousemove={onMouseMove}
+    on:mouseup={finishGearSwitch}
+    on:mouseout={finishGearSwitch}
+    on:blur={finishGearSwitch}
+    on:touchmove={onTouchMove}
+    on:touchend={finishGearSwitch}
+    on:touchcancel={finishGearSwitch}
+>
+    <button id="knob" on:mousedown={onMouseDown} on:touchstart={onTouchStart} />
 </div>
 
 <style>
@@ -120,5 +182,11 @@
         top: 41.5%;
         left: 18%;
         cursor: pointer;
+    }
+
+    @media (max-width: 580px) {
+        #gearbox {
+            --gearbox-size: 80px;
+        }
     }
 </style>
