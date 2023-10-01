@@ -14,6 +14,11 @@ export let CARS;
  */
 export let SIGNS;
 
+/**
+ * @type {HTMLImageElement[]}
+ */
+export let EXHAUST;
+
 export const GEAR = [
     '/raceday/assets/g_n.png',
     '/raceday/assets/g_1.png',
@@ -63,6 +68,18 @@ export const preloadAssets = () => {
         '/raceday/assets/car_2.png',
         '/raceday/assets/car_3.png',
         '/raceday/assets/car_4.png',
+    ].map(src => Object.assign(new Image(), { src }));
+
+    EXHAUST = [
+        '/raceday/assets/e_1.png',
+        '/raceday/assets/e_2.png',
+        '/raceday/assets/e_3.png',
+        '/raceday/assets/e_4.png',
+        '/raceday/assets/e_5.png',
+        '/raceday/assets/e_4.png',
+        '/raceday/assets/e_5.png',
+        '/raceday/assets/e_4.png',
+        '/raceday/assets/e_5.png',
     ].map(src => Object.assign(new Image(), { src }));
 
     SIGNS = ['/raceday/assets/start.png', '/raceday/assets/finish.png'].map(src => Object.assign(new Image(), { src }));

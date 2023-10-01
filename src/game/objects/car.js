@@ -60,7 +60,16 @@ export class Car extends PubSub {
     /**
      * @type {number}
      */
-    #x;
+    #initialX;
+
+    /**
+     * @type {number}
+     */
+    x = Infinity;
+    /**
+     * @type {number}
+     */
+    y = Infinity;
 
     /**
      * @type {HTMLImageElement}
@@ -105,7 +114,7 @@ export class Car extends PubSub {
         super();
 
         this.#sprite = sprite;
-        this.#x = x;
+        this.#initialX = x;
         this.#speedRatio = speedRatio;
         this.#gearRatio = gearRatio;
         this.#gearVelocity = gearVelocity;
@@ -200,11 +209,11 @@ export class Car extends PubSub {
      * @param {number} newGear
      */
     #changeGear(newGear) {
-        if (!this.#started) return;
+        if (!this.#started) return false;
 
         const newGearRatio = this.#gearRatio[newGear - 1];
 
-        if (newGearRatio === undefined) return;
+        if (newGearRatio === undefined) return false;
 
         const currentRatio = this.#gearRatio[this.gear - 1];
 
@@ -217,20 +226,23 @@ export class Car extends PubSub {
             gear: this.gear,
             rpm: this.#rpm,
         });
+
+        return true;
     }
     gearUp() {
-        this.#changeGear(this.gear + 1);
+        return this.#changeGear(this.gear + 1);
     }
     gearDown() {
-        this.#changeGear(this.gear - 1);
+        return this.#changeGear(this.gear - 1);
     }
     /**
      * @param {CanvasRenderingContext2D} context
      * @param {number} worldDistance
      */
     render(context, worldDistance) {
-        const y = canvasSize - worldDistance / pxPerCentimeter - this.#height - this.#bottomOffset;
+        this.x = this.#initialX + this.#xOffset;
+        this.y = canvasSize - worldDistance / pxPerCentimeter - this.#height - this.#bottomOffset;
 
-        context.drawImage(this.#sprite, this.#x + this.#xOffset, y, this.#width, this.#height);
+        context.drawImage(this.#sprite, this.x, this.y, this.#width, this.#height);
     }
 }

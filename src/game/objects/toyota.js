@@ -1,7 +1,13 @@
+import { random } from '../../lib/random';
 import { CARS } from '../assets';
 import { Car } from './car';
+import { Exhaust } from './exhaust';
 
 export class Toyota extends Car {
+    /**
+     * @type {Exhaust | undefined}
+     */
+    #exhaust;
     constructor() {
         super({
             speedRatio: 26.6,
@@ -19,5 +25,38 @@ export class Toyota extends Car {
             x: 878,
             sprite: CARS[1],
         });
+    }
+    /**
+     * @param {number} dt
+     */
+    update(dt) {
+        super.update(dt);
+
+        if (this.#exhaust) {
+            this.#exhaust.update(dt);
+            if (this.#exhaust.done) {
+                this.#exhaust = undefined;
+            }
+        }
+    }
+
+    /**
+     * @param {CanvasRenderingContext2D} context
+     * @param {number} worldDistance
+     */
+    render(context, worldDistance) {
+        super.render(context, worldDistance);
+
+        this.#exhaust && this.#exhaust.render(context, this.x + 25, this.y + 209);
+    }
+
+    gearUp() {
+        const result = super.gearUp();
+
+        if (result) {
+            this.#exhaust = new Exhaust(12, random(30, 40));
+        }
+
+        return result;
     }
 }
