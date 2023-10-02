@@ -21,4 +21,4 @@ export const stats = persisted('stats', {
     time: Infinity,
 });
 
-export const winner = persisted('winner', '');
+export const winner = persisted('racedayWinner', '');
