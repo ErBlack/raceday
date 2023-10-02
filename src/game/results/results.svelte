@@ -46,11 +46,13 @@
 
             win = results[0].player === 'Player';
 
-            winner.update(value => {
-                const code = value || encrypt(String(Date.now()).slice(0, -1));
+            if (win) {
+                winner.update(value => {
+                    const code = value || encrypt(String(Date.now()).slice(0, -1));
 
-                return code;
-            });
+                    return code;
+                });
+            }
         }
     );
 </script>
