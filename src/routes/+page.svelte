@@ -4,6 +4,12 @@
     import { gameOpen } from '../game/store';
     import Header from '../components/header/header.svelte';
     import Start from '../components/start/start.svelte';
+    import { preloadAssets } from '../game/assets';
+    import { onMount } from 'svelte';
+
+    onMount(() => {
+        preloadAssets();
+    });
 </script>
 
 <main>

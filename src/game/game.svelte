@@ -1,7 +1,6 @@
 <script>
     import { onDestroy, onMount } from 'svelte';
     import { initRender } from './render';
-    import { preloadAssets } from './assets';
     import { canvasSize } from './const';
     import Dashboard from './dashboard/dashboard.svelte';
     import { startGame, stopGame } from './game';
@@ -29,7 +28,6 @@
         }
 
         updateScale();
-        preloadAssets();
         startGame();
     });
 

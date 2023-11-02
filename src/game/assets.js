@@ -85,4 +85,6 @@ export const preloadAssets = () => {
     SIGNS = ['/raceday/assets/start.png', '/raceday/assets/finish.png'].map(src => Object.assign(new Image(), { src }));
 
     [...GEAR].forEach(preloadImage);
+    [...RPM].forEach(preloadImage);
+    [...SPEED].forEach(preloadImage);
 };
