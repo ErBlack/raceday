@@ -1,23 +1,5 @@
 <script>
-    import { gameOpen } from '../../game/store';
-
-    /**
-     * @type Date
-     */
-    export let start;
-
-    // @ts-ignore
-    let available = start < Date.now() || (typeof window !== 'undefined' && location.search === '?sudo');
-
-    if (!available) {
-        setTimeout(
-            () => {
-                available = true;
-            },
-            // @ts-ignore
-            start - Date.now()
-        );
-    }
+    import { gameActivated, gameOpen } from '../../game/store';
 
     const offset = 3;
     const row = 41.5;
@@ -139,6 +121,7 @@
 
         if (gear === 5 && prevGear === 3) {
             gameOpen.set(true);
+            gameActivated.set(true);
         }
 
         prevGear = gear;
@@ -178,14 +161,12 @@
     id="gearbox"
     role="button"
     tabindex="0"
-    on:mousemove={available ? onMouseMove : null}
-    on:mouseup={available ? finishGearSwitch : null}
-    on:touchmove={available ? onTouchMove : null}
-    on:touchend={available ? finishGearSwitch : null}
+    on:mousemove={onMouseMove}
+    on:mouseup={finishGearSwitch}
+    on:touchmove={onTouchMove}
+    on:touchend={finishGearSwitch}
 >
-    <button id="knob" on:mousedown={available ? onMouseDown : null} on:touchstart={available ? onTouchStart : null}
-        >{prevGear || ''}</button
-    >
+    <button id="knob" on:mousedown={onMouseDown} on:touchstart={onTouchStart}>{prevGear || ''}</button>
 </div>
 
 <style>

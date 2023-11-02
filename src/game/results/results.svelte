@@ -1,4 +1,5 @@
 <script>
+    import Button from '../../components/button/button.svelte';
     import { encrypt } from '../../lib/crypt';
 
     import { startGame, stopGame } from '../game';
@@ -68,19 +69,20 @@
                 <pre class="car">{results.car.padEnd(33, ' ')}</pre>{/each}
         </div>
         <div class="buttonset">
-            <button
-                class="button"
+            <Button
                 autofocus
+                type="button"
                 on:click={() => {
                     stopGame();
                     startGame();
-                }}>Play Again</button
+                }}>Play Again</Button
             >
-            <button
+            <Button
+                type="button"
                 on:click={() => {
                     stopGame();
                     gameOpen.set(false);
-                }}>Exit</button
+                }}>Exit</Button
             >
         </div>
     </section>
@@ -131,16 +133,6 @@
         grid-template-columns: repeat(2, max-content);
         justify-content: center;
         gap: 60px;
-    }
-
-    button {
-        appearance: none;
-        border: solid 3px currentColor;
-        border-radius: 4px;
-        background: none;
-        padding: 20px 30px;
-        font: inherit;
-        cursor: pointer;
     }
 
     .time {

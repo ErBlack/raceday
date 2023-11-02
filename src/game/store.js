@@ -22,3 +22,5 @@ export const stats = persisted('stats', {
 });
 
 export const winner = persisted('racedayWinner', '');
+
+export const gameActivated = persisted('racedayGameActivated', false);

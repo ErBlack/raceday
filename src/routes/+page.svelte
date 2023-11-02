@@ -1,18 +1,32 @@
 <script>
     import './styles.css';
-    import Invitation from '../components/invitation/invitation.svelte';
     import Game from '../game/game.svelte';
     import { gameOpen } from '../game/store';
-    import Win from '../components/win/win.svelte';
-
-    const start = new Date('2023-10-14T14:00:00.000Z');
-    const easer = new Date('2023-10-02T16:00:00.000Z');
+    import Header from '../components/header/header.svelte';
+    import Start from '../components/start/start.svelte';
 </script>
 
 <main>
-    <Invitation {start} {easer} />
-    <Win />
+    <Header />
+    <section class="content">
+        <Start />
+    </section>
     {#if $gameOpen}
         <Game />
     {/if}
 </main>
+
+<style>
+    main {
+        height: 100%;
+        display: grid;
+        grid-template-rows: max-content 1fr;
+    }
+
+    .content {
+        margin: 0 auto 2em auto;
+        padding: 0 2em;
+        width: 650px;
+        max-width: 100vw;
+    }
+</style>

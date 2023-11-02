@@ -57,10 +57,10 @@ export const SPEED = [
 
 export const preloadAssets = () => {
     CITY = [
-        '/raceday/assets/city_1.png',
-        '/raceday/assets/city_2.png',
-        '/raceday/assets/city_3.png',
-        '/raceday/assets/city_4.png',
+        '/raceday/assets/city_1.jpg',
+        '/raceday/assets/city_2.jpg',
+        '/raceday/assets/city_3.jpg',
+        '/raceday/assets/city_4.jpg',
     ].map(src => Object.assign(new Image(), { src }));
 
     CARS = [
