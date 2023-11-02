@@ -157,9 +157,9 @@
     };
 </script>
 
-<div
+<span
     id="gearbox"
-    role="button"
+    role="menu"
     aria-label="Gearbox"
     tabindex="0"
     on:mousemove={onMouseMove}
@@ -167,10 +167,10 @@
     on:touchmove={onTouchMove}
     on:touchend={finishGearSwitch}
 >
-    <button id="knob" aria-label="Gearbox knob" on:mousedown={onMouseDown} on:touchstart={onTouchStart}
+    <button role="menuitem" id="knob" aria-label="Gearbox knob" on:mousedown={onMouseDown} on:touchstart={onTouchStart}
         >{prevGear || ''}</button
     >
-</div>
+</span>
 
 <style>
     #gearbox {

@@ -14,9 +14,9 @@
 
 <main>
     <Header />
-    <section class="content">
+    <div class="content">
         <Start />
-    </section>
+    </div>
     {#if $gameOpen}
         <Game />
     {/if}
