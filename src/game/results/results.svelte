@@ -62,11 +62,12 @@
     <section class="results">
         <h2>You {win ? 'Win' : 'Lose'}!</h2>
         <div class="table">
-            {#each results as results}<pre class="time">{(results.player + ':').padEnd(20, ' ')}{results.time ===
-                    undefined
+            {#each results as results, index (index)}
+                <pre class="time">{(results.player + ':').padEnd(20, ' ')}{results.time === undefined
                         ? '--.----'
                         : (results.time / 1000).toFixed(3)}</pre>
-                <pre class="car">{results.car.padEnd(33, ' ')}</pre>{/each}
+                <pre class="car">{results.car.padEnd(33, ' ')}</pre>
+            {/each}
         </div>
         <div class="buttonset">
             <Button

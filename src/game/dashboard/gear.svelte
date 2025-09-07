@@ -1,18 +1,6 @@
 <script>
-    import { onDestroy } from 'svelte';
     import { GEAR } from '../assets';
     import { gearStore } from '../store';
-
-    let gear = 0;
-
-    const unsubscribe = gearStore.subscribe(value => {
-        gear = value;
-    });
-
-    onDestroy(() => {
-        gear = 0;
-        unsubscribe();
-    });
 </script>
 
 <img src={GEAR[$gearStore]} alt="" />

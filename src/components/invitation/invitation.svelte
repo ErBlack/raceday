@@ -1,7 +1,6 @@
 <script>
     import Timer from './timer.svelte';
     import Links from './links.svelte';
-    import Gearbox from '../gearbox/gearbox.svelte';
 
     /**
      * @type Date
