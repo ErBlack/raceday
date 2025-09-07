@@ -19,9 +19,12 @@ export class Bot extends Driver {
         this.car.addEventListener(event, callback);
     }
     start() {
-        this.#startTimeout = setTimeout(() => {
-            this.car.gearUp();
-        }, random(10, 200));
+        this.#startTimeout = setTimeout(
+            () => {
+                this.car.gearUp();
+            },
+            random(10, 200)
+        );
     }
     kill() {
         clearTimeout(this.#startTimeout);

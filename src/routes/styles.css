@@ -1,6 +1,8 @@
 @font-face {
     font-family: 'nfs';
-    src: url('/raceday/nfs.woff2') format('woff2'), url('/raceday/nfs.woff') format('woff');
+    src:
+        url('/raceday/nfs.woff2') format('woff2'),
+        url('/raceday/nfs.woff') format('woff');
     font-weight: 100;
     font-style: normal;
     font-display: swap;

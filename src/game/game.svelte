@@ -46,7 +46,7 @@
 
 <svelte:window on:resize={updateScale} on:scroll={updateScale} />
 <div id="game">
-    <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});" />
+    <canvas id="canvas" use:initRender width={canvasSize} height={canvasSize} style="transform: scale({scale});"></canvas>
     <Dashboard />
     <Countdown />
     <Results />

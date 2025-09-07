@@ -14,7 +14,7 @@
 </script>
 
 <div class="links">
-    {#each links as { icon, text, href }}
+    {#each links as { icon, text, href } (href)}
         <a {href} class="row"><span class="icon">{@html icon}</span><span>{text}</span></a>
     {/each}
 </div>
