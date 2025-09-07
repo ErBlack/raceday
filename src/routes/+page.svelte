@@ -33,6 +33,7 @@
         margin: 0 auto 2em auto;
         padding: 0 2em;
         width: 650px;
+        box-sizing: border-box;
         max-width: 100vw;
     }
 </style>

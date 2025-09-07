@@ -2,6 +2,7 @@
 
 <style>
     button {
+        color: black;
         font-style: italic;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
         appearance: none;
@@ -13,7 +14,7 @@
         font-size: 16px;
     }
 
-    button:focus {
+    button:focus-visible {
         outline: black 3px dashed;
     }
 </style>
