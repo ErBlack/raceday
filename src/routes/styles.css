@@ -23,6 +23,7 @@ body {
     color: var(--color-text);
     box-shadow: inset 0 0 90vw 0 rgba(0, 0, 0, 0.3);
     font-family: Helvetica;
+    overscroll-behavior: none;
 }
 
 a {
